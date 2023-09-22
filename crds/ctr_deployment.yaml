@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctr-mapper-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctr-mapper
+  template:
+    metadata:
+      labels:
+        app: ctr-mapper
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        node-role.kubernetes.io/edge: ""
+      containers:
+      - name: ctr-mapper-container
+        image: ladhar1/ctr_mapper:v1.0.0
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
